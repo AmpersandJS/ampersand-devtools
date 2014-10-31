@@ -13,6 +13,8 @@ Until this is released, install the "ampersand-chrome-devtools" directory as an 
 So far:
 
 * prints out the versions of all ampersand modules that are using ampersand-version
+* validates them against the "latest" tag on npm to see if they're the latest version
+* prints a link to the "homepage" field from the npm package
 
 ## Architecture
 
@@ -26,3 +28,9 @@ Very much a work in progress. Chrome extensions are kinda funky.
 ## More reading
 
 * [https://developer.chrome.com/extensions/devtools](https://developer.chrome.com/extensions/devtools)
+
+## Screenshot
+
+Yeah, it's not much yet:
+
+![](./docs/screenshot.png)

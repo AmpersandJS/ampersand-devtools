@@ -1,11 +1,18 @@
 {
-    "name": "ampersand-chrome-devtools",
-    "version": "1.0.0",
-    "description": "",
-    "main": "background.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "",
-    "license": "ISC"
+  "name": "ampersand-chrome-devtools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "browserify panel.js > panel.bundle.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^6.2.0"
+  },
+  "dependencies": {
+    "xhr": "^1.17.0"
+  }
 }
