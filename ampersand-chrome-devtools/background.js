@@ -17,7 +17,7 @@ var contentScriptReady = false;
 var pendingLogs = [];
 var devtoolsPort;
 
-////Handle request from devtools   
+//Handle request from devtools
 chrome.runtime.onConnect.addListener(function (port) {
     if (port.name !== 'ampersand-panel') return;
 
@@ -30,12 +30,12 @@ chrome.runtime.onConnect.addListener(function (port) {
         } else {
             pendingLogs.push(message);
         }
-	});
+    });
 
     if (contentScriptReady) {
         devtoolsPort.postMessage({ source: 'content', event: 'ready' });
     }
-});	
+});
 
 // Handle messages from content script
 chrome.runtime.onMessage.addListener(function (message) {
