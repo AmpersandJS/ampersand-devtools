@@ -6,12 +6,12 @@ var port = chrome.runtime.connect({
 var debug = {
     log: function() {
         var args = [].slice.call(arguments);
-        port.postMessage({name: 'log', data: args});
+        port.postMessage({name: 'log', data: args, level: 'info'});
     },
 
     error: function () {
         var args = [].slice.call(arguments);
-        port.postMessage({name: 'error', data: args});
+        port.postMessage({name: 'error', data: args, level: 'error'});
     }
 };
 
@@ -23,18 +23,13 @@ function wrapError(syncFn) {
     }
 }
 
-port.onMessage.addListener(function (message) {
-    if (message.source === 'content' && message.event === 'ready') {
-        wrapError(go);
-    }
-});
+function refresh () {
+    document.querySelector('[data-hook~=versions]').innerHTML = '';
 
-function go () {
     chrome.devtools.inspectedWindow.eval(
         'ampersand',
         function (result, isException) {
             wrapError(function () {
-
                 if (!result) return;
 
                 Object.keys(result).forEach(function (name) {
@@ -46,3 +41,17 @@ function go () {
         }
     );
 }
+
+
+//Everytime the current tab is refreshed, we'll get a tabLoaded event
+port.onMessage.addListener(function (message) {
+    if (message.name === 'tabLoaded') {
+        wrapError(refresh);
+    }
+});
+
+//Tell background.js that we're ready, and our tabId
+port.postMessage({
+    name: 'init',
+    tabId: chrome.devtools.inspectedWindow.tabId
+});

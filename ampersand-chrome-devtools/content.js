@@ -5,14 +5,11 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     if ('log' == message.name) {
         args = message.data;
         args.unshift('From devtools:');
-        console.log.apply(console, args);
-    }
+        message.level = message.level || 'info';
 
-    if ('error' == message.name) {
-        args = message.data;
-        args.unshift('From devtools:');
-        console.error.apply(console, args);
+        if (message.level === 'info') console.log.apply(console, args);
+        if (message.level === 'error') console.error.apply(console, args);
     }
 });
 
-chrome.runtime.sendMessage({ source: 'content', event: 'ready' });
+chrome.runtime.sendMessage({ name: 'tabLoaded', source: 'content' });
